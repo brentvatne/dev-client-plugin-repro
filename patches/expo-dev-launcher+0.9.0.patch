@@ -1,0 +1,20 @@
+diff --git a/node_modules/expo-dev-launcher/plugin/build/resolveExpoUpdatesVersion.js b/node_modules/expo-dev-launcher/plugin/build/resolveExpoUpdatesVersion.js
+index 68e936a..e40c92a 100644
+--- a/node_modules/expo-dev-launcher/plugin/build/resolveExpoUpdatesVersion.js
++++ b/node_modules/expo-dev-launcher/plugin/build/resolveExpoUpdatesVersion.js
+@@ -8,7 +8,14 @@ const fs_1 = __importDefault(require("fs"));
+ const path_1 = __importDefault(require("path"));
+ const resolve_from_1 = __importDefault(require("resolve-from"));
+ function resolveExpoUpdatesVersion(projectRoot) {
+-    const expoUpdatesBuildPath = (0, resolve_from_1.default)(projectRoot, 'expo-updates');
++    let expoUpdatesBuildPath;
++    try {
++        expoUpdatesBuildPath = (0, resolve_from_1.default)(projectRoot, 'expo-updates');
++    }
++    catch (e) {
++        // this is expected in projects that don't have expo-updates installed
++        return null;
++    }
+     if (!expoUpdatesBuildPath) {
+         return null;
+     }
